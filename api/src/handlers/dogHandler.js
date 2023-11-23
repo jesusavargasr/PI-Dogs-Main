@@ -1,6 +1,6 @@
 const getDogs = require("../controllers/getDogs")
 const getDogById = require("../controllers/getDogsById")
-const getDogByName = require("../controllers/getDogsByName")
+const getDogsByName = require("../controllers/getDogsByName")
 const postDog = require("../controllers/postDogs")
 
 const getDogsHandler= async (req, res) =>{ 
@@ -26,8 +26,9 @@ catch (error) {
 
 const getDogByNameHandler= async (req, res) =>{ 
     try {
-    const {name} = req.query;
-    const response = await getDogByName(name);
+        const {name} = req.query;
+        console.log("AQUIIIIIIIIIIIII", name)
+    const response = await getDogsByName(name);
         res.status(200).json(response);
     } 
 catch (error) {

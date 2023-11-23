@@ -6,7 +6,7 @@ const {API_KEY}= process.env;
 const size =100;
 const { Dog, Temperament, DogxTemperament } = require('../db');
 
-let BASE_URL = "https://api.thedogapi.com/v1/breeds";
+let BASE_URL = `https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`;
 let dogData=[];
 
 const getDogs = async () => {
@@ -29,34 +29,26 @@ const getDogs = async () => {
   });
   
   if (dogData.length === 0) {
-  const dogsFromApi = await axios.get(BASE_URL);
+  const dogsFromApi = (await axios.get(BASE_URL)).data;
 
-
-  const response = dogsFromApi.data.results;
-
- const apiPokemons = response.map(async (pokemon) => {
-    const apiData = await axios.get(pokemon.url);
-    const data = apiData.data;
-    const mapData = {
-      id: data.id,
-      name: data.name,
-      image: data.sprites.other['official-artwork'].front_default,
-      attack: data.stats[1]["base_stat"],
-      defense: data.stats[2]["base_stat"],
-      speed: data.stats[5].base_stat,
-      height: data.height,
-      weight: data.weight,
-      life: data.stats[0]["base_stat"],
-      types: data.types.map((type) => type.type.name),
+ const response = dogsFromApi.map(async (dog) => {
+    return {
+      id: dog.id,
+      name: dog.name,
+      image: dog.image.url,
+      height: dog.height.metric,
+      weight: dog.weight.metric,
+      lifeSpan: dog.life_span,
+      // temperament: dog.temperament.map( (temp)=>{
+      //   return {name:temp.name}})
     };
-    return mapData;
   });
 
- pokedata = await Promise.all(apiPokemons);
+  dogData = await Promise.all(response);
   }
- const totalData = newPokemons.concat(pokedata);
+ const allDogs = newDogs.concat(dogData);
 
-  return totalData;
+  return allDogs;
 };
 
 module.exports = getDogs;
