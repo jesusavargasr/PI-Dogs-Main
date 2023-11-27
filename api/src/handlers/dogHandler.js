@@ -27,7 +27,6 @@ catch (error) {
 const getDogByNameHandler= async (req, res) =>{ 
     try {
         const {name} = req.query;
-        console.log("AQUIIIIIIIIIIIII", name)
     const response = await getDogsByName(name);
         res.status(200).json(response);
     } 
