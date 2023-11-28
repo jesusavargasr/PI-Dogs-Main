@@ -9,12 +9,15 @@ let BASE_URL = `https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`;
 let dogData=[];
 
 const getDogs = async () => {
- const dbDogs = await Dog.findAll({ include: { model: Temperament } });
+ const dbDogs =  await Dog.findAll({
+  include: [{ model: Temperament, attributes: ['name'], through: { attributes: [] } }]
+});
 
  console.log("dbdogs:", dbDogs);
 
   const newDogs = dbDogs.map((dog) => {
-    console.log("aqui3",dogData);
+const temperamentsArray = dog.temperaments.map((temperament) => temperament.name);
+
     return {
       id: dog.id,
       name: dog.name,
@@ -22,7 +25,7 @@ const getDogs = async () => {
       height: dog.height,
       weight: dog.weight,
       lifeSpan: dog.lifeSpan,
-      temperament: dog.temperament,
+      temperament:temperamentsArray.join(', ')
     };
   });
   

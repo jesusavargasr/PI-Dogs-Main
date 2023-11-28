@@ -36,8 +36,8 @@ catch (error) {
 }
 const postDogHandler= async (req, res) =>{ 
     try {
-        const { name, image, height, weigth, lifeSpan} = req.body;
-        const response = await postDog( name, image, height, weigth, lifeSpan);
+        const { name, image, height, weight, lifeSpan, temperament} = req.body;
+        const response = await postDog( name, image, height, weight, lifeSpan, temperament);
         res.status(201).json(response);
     } 
 catch (error) {
