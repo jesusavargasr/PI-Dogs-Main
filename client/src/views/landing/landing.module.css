@@ -1,0 +1,31 @@
+/* landing.module.css */
+.text {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 350px;
+    padding-bottom: 0px;
+    margin-left: 50px;
+  }
+  
+  .button {
+    font-family: 'Great Vibes', cursive;
+    border-color: rgb(193, 250, 5);
+    background-color: rgb(255, 238, 0);
+    font-size: 30px;
+    padding: 40px;
+    width: 150px;
+    height: 10px;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    margin-top: 50px;
+    margin-left: 610px;
+  }
+  
+  .button:hover {
+    box-shadow: 0 0 10px rgb(32, 230, 91); 
+  }
+  

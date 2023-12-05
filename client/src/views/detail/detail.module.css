@@ -1,0 +1,19 @@
+.detail {
+
+   
+    background-color: rgba(225, 202, 247, 0.418);
+    border-radius: 50px;
+    display: inline-table;
+     padding: 10%;
+    box-shadow:0 0 30px rgb(231, 45, 231);
+    margin: 1%;
+    width: 55%; 
+    height: 10%; 
+    cursor: pointer;
+    font-family: 'Great Vibes', cursive;
+    color: rgb(100, 5, 100);
+    border-color: 5px ;
+   
+  }
+  
+ 
