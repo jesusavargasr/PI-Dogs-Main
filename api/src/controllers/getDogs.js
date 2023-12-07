@@ -8,7 +8,9 @@ const { Dog, Temperament} = require('../db');
 let BASE_URL = `https://api.thedogapi.com/v1/breeds/?api_key=${API_KEY}`;
 let dogData=[];
 
+
 const getDogs = async () => {
+  console.log('aqui1',dogData);
  const dbDogs =  await Dog.findAll({
   include: [{ model: Temperament, attributes: ['name'], through: { attributes: [] } }]
 });
@@ -29,6 +31,7 @@ const temperamentsArray = dog.temperaments.map((temperament) => temperament.name
   });
   
   if (dogData.length === 0) {
+    console.log('aqui2',dogData);
   const dogsFromApi = (await axios.get(BASE_URL)).data;
 
  const response = dogsFromApi.map(async (dog) => {

@@ -9,6 +9,7 @@ const Form = () => {
     const [errors, setErrors] = useState({})
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [touchedFields, setTouchedFields] = useState({});
+    const [isEmpty, setIsEmpty] = useState(true)
 
     const [dogData, setDogData] = useState({
         name: '',
@@ -46,7 +47,11 @@ useEffect(() => {
     setErrors(validation({
       ...dogData,
       [name]: value
-    }));
+    }))
+    
+    
+    setIsEmpty(false);
+
   };
 
   const handleRemoveTemperament = index => {
@@ -59,12 +64,12 @@ useEffect(() => {
 
   useEffect(() => {
     
-    if (Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0 && isEmpty===false) {
       setSubmitDisabled(false); 
     } else {
       setSubmitDisabled(true); 
     }
-  }, [errors]);
+  }, [errors, dogData, isEmpty]);
 
   const handleSubmit = e => {
     e.preventDefault();

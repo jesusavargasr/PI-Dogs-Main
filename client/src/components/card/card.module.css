@@ -19,9 +19,9 @@
     color: white;
   }
 
-  .card-image {
-    max-width: 10%; 
-    height: auto; 
+  .cardImage {
+    max-width: 250%; 
+    height: 100px; 
   }
   
 
