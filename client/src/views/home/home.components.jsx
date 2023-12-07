@@ -25,7 +25,7 @@ const Home = () => {
       });
 
     return () => {
-      dispatch(clear_results());
+      dispatch(clearResults());
     };
   }, [dispatch]);
 

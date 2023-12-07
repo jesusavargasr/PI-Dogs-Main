@@ -13,7 +13,6 @@ const getDogs = async () => {
   include: [{ model: Temperament, attributes: ['name'], through: { attributes: [] } }]
 });
 
- console.log("dbdogs:", dbDogs);
 
   const newDogs = dbDogs.map((dog) => {
 const temperamentsArray = dog.temperaments.map((temperament) => temperament.name);

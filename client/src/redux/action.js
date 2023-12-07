@@ -15,8 +15,9 @@ export const getAllDogs = () => {
 
 export const getByName = (name) => {
     return async (dispatch) => {
-        const apiData = await axios.get(`http://localhost:3001/dog/search?searchName=${name}`);
+        const apiData = await axios.get(`http://localhost:3001/dog/search?name=${name}`);
         const dogs= apiData.data;
+        console.log(dogs)
         dispatch({type: GET_BY_NAME, payload: dogs})
          
 }; 
@@ -45,7 +46,7 @@ export const createDog = (data) =>{
           });
       } catch (error) {
           console.log(error);
-          alert('No se pudo crear')
+          alert(error.message);
           
       }
   }

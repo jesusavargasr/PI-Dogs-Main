@@ -19,19 +19,19 @@ const Detail = () => {
     }, [dispatch,id])
 
 
-   
+   console.log("hola",detail[0]);
 
     return (
         <div >
             
             <div className={style.detail}>
-            <img src={detail?.image} alt={detail?.name} />
-                <h3>Id: {detail?.id}</h3>
-                <h3>name: {detail?.name}</h3>
-                <h3>lifeSpan: {detail?.lifeSpan}</h3>
-                <h3>Height: {detail?.height}</h3>
-                <h3>Weight: {detail?.weight}</h3>
-                <h3>temperaments: {detail?.temperaments}</h3>
+            <img src={detail[0]?.image} alt={detail[0]?.name} />
+                <h3>Id: {detail[0]?.id}</h3>
+                <h3>name: {detail[0]?.name}</h3>
+                <h3>lifeSpan: {detail[0]?.lifeSpan}</h3>
+                <h3>Height: {detail[0]?.height}</h3>
+                <h3>Weight: {detail[0]?.weight}</h3>
+                <h3>temperaments: {detail[0]?.temperament}</h3>
             </div>
         </div>
     );

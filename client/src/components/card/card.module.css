@@ -5,11 +5,9 @@
     border-radius: 50px;
     flex-wrap: wrap;
     padding: 20px;
-    box-shadow: 0 0 0 10px transparent; /* Agregamos una sombra transparente para los bordes */
+    box-shadow: 0 0 0 10px transparent; 
     gap: 10px;
     cursor: pointer;
-    width: 500px;
-    height: auto;
    
   }
   
@@ -21,6 +19,10 @@
     color: white;
   }
 
-
+  .card-image {
+    max-width: 10%; 
+    height: auto; 
+  }
+  
 
 

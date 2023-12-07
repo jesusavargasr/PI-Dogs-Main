@@ -21,7 +21,7 @@ switch(actions.type){
 case GET_ALL_DOGS: 
 return {...state,dogsBackup: actions.payload, allDogs: actions.payload};
 case GET_BY_NAME:
-  return {...state, allDogs: [actions.payload]};
+  return {...state, allDogs: actions.payload};
 case GET_BY_ID:
   return {...state, dogId: actions.payload};
   case POST_DOGS:
@@ -33,7 +33,7 @@ case GET_BY_ID:
   case FILTER_BY_TEMP: 
   const dataCopy= [...state.dogsBackup]
   const response = [...dataCopy.filter((dog)=>{
-    return dog.temperaments && dog.temperaments.map(elemn => elemn.trim()).includes(actions.payload)
+   return dog.temperament && dog.temperament.includes(actions.payload)
   })]
   return {
     ...state,
@@ -55,17 +55,26 @@ return {
 }
 case ORDER_BY_WEIGHT:
   let orderedByWeight = [...state.allDogs];
-  
+
   if (actions.payload === 'asc') {
-    orderedByWeight.sort((a, b) => a.weight - b.weight);
+    orderedByWeight.sort((a, b) => {
+      const weightA = parseInt(a.weight.match(/\d+/g)[0]);
+      const weightB = parseInt(b.weight.match(/\d+/g)[0]);
+      return weightA - weightB;
+    });
   } else if (actions.payload === 'desc') {
-    orderedByWeight.sort((a, b) => b.weight - a.weight);
+    orderedByWeight.sort((a, b) => {
+      const weightA = parseInt(a.weight.match(/\d+/g)[0]);
+      const weightB = parseInt(b.weight.match(/\d+/g)[0]);
+      return weightB - weightA;
+    });
   }
-  
+
   return {
     ...state,
     allDogs: orderedByWeight,
   };
+
     case ORDER_ALPHABETICALLY:
       let orderedAlphabetically = [...state.allDogs];
   

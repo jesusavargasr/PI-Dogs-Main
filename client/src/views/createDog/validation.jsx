@@ -1,43 +1,32 @@
-const validation = (pokemonData)=>{
+const validation = (dogData)=>{
     const errors = {}
   
     
-    if (!/^.{4,}$/.test(pokemonData.name)) {
-      errors.name = 'El nombre debe contener al menos 4 letras';
+    if (!/^.{3,}$/.test(dogData.name)) {
+      errors.name = 'El nombre debe contener al menos 3 letras';
       
   }
   
-  if (!/^.{1,250}$/.test(pokemonData.image)) {
+  if (!/^.{1,250}$/.test(dogData.image)) {
     errors.image ='La URL de la imagen debe tener menos de 250 caracteres';
       
   }
   
-  if (!/^[1-9][0-9]?$|^100$/.test(pokemonData.life)) {
-    errors.life = 'El campo "Vida" debe ser un número entre 1 y 100';
+  if (!/^.{3,5}$/.test(dogData.lifeSpan)) {
+    errors.lifeSpan = 'El campo "Expectativa de vida" debe tener dos numeros entre 1 y 99 separados por un "-"';
   }
   
-  if (!/^[1-9][0-9]?$|^100$/.test(pokemonData.attack)) {
-    errors.attack = 'El campo "Ataque" debe ser un número entre 1 y 100';
+  
+  if (!/^.{3,5}$/.test(dogData.height)) {
+    errors.height = 'El campo "Altura" debe tener dos numeros entre 1 y 99 separados por un "-"';
   }
   
-  if (!/^[1-9][0-9]?$|^100$/.test(pokemonData.defense)) {
-    errors.defense = 'El campo "Defensa" debe ser un número entre 1 y 100';
+  if (!/^.{3,5}$/.test(dogData.weight)) {
+    errors.weight = 'El campo "Peso" debe tener dos numeros entre 1 y 99 separados por un "-"';
   }
   
-  if (!/^[1-9][0-9]?$|^100$/.test(pokemonData.speed)) {
-    errors.speed = 'El campo "Velocidad" debe ser un número entre 1 y 100';
-  }
-  
-  if (!/^[1-9][0-9]?$|^100$/.test(pokemonData.height)) {
-    errors.height = 'El campo "Altura" debe ser un número entre 1 y 100';
-  }
-  
-  if (!/^[1-9][0-9]?$|^100$/.test(pokemonData.weight)) {
-    errors.weight = 'El campo "Peso" debe ser un número entre 1 y 100';
-  }
-  
-  if (pokemonData.types.length !== 2) {
-    errors.types = 'Debes elegir exactamente 2 tipos';
+  if (dogData.temperament.length === 0) {
+    errors.temperament = 'Debes elegir al menos un temperamento';
   }
   
   

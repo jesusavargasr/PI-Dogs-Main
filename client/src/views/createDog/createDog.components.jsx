@@ -2,85 +2,117 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createDog, getTemperaments } from '../../redux/action';
 import validation from './validation';
+import style from './createDog.module.css';
 const Form = () => {
     const dispatch = useDispatch();
-    const types = useSelector(state => state.types);
+    const temperaments = useSelector(state => state.temperaments);
     const [errors, setErrors] = useState({})
+    const [submitDisabled, setSubmitDisabled] = useState(true);
+    const [touchedFields, setTouchedFields] = useState({});
 
-
-    const [pokemonData, setPokemonData] = useState({
+    const [dogData, setDogData] = useState({
         name: '',
         image: '',
-        life: '',
-        attack: '',
-        defense: '',
-        speed: '',
+        lifeSpan: '',
         height: '',
         weight: '',
-        types: []
+        temperament: []
     });
-console.log({pokemonData})
-    useEffect(() => {
-        dispatch(get_types())
-    }, [dispatch])
+console.log({dogData})
+useEffect(() => {
+    dispatch(getTemperaments());
+  }, [dispatch]);
 
-    const handleChange = (event) => {
-        if (event.target.name === 'types') 
-        return setPokemonData( { ...pokemonData, 
-             types: [...pokemonData.types, event.target.value],
-         }) 
-         setPokemonData({
-                ...pokemonData,
-                [event.target.name]: event.target.value
-            });
-        setErrors(validation({...pokemonData, 
-        [event.target.name]: event.target.value})
-        )
+  const handleBlur = fieldName => {
+    setTouchedFields({ ...touchedFields, [fieldName]: true });
+    setErrors(validation(dogData)); 
+  };
 
-        
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    if (name === 'temperament') {
+      return setDogData({
+        ...dogData,
+        temperament: [...dogData.temperament, value]
+      });
     }
 
+    setDogData({
+      ...dogData,
+      [name]: value
+    });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
+    setErrors(validation({
+      ...dogData,
+      [name]: value
+    }));
+  };
 
+  const handleRemoveTemperament = index => {
+    const updatedTemperaments = dogData.temperament.filter((_, i) => i !== index);
+    setDogData({
+      ...dogData,
+      temperament: updatedTemperaments
+    });
+  };
 
-        dispatch(createPokemon(pokemonData));
+  useEffect(() => {
+    
+    if (Object.keys(errors).length === 0) {
+      setSubmitDisabled(false); 
+    } else {
+      setSubmitDisabled(true); 
     }
+  }, [errors]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (Object.keys(errors).length === 0) {
+    dispatch(createDog(dogData));
+    } else  alert('Validation errors:', errors);
+};
+
 
     return (
+        <div className={style.formContainer}>
         <form onSubmit={handleSubmit}>
-            <input type="text" name="name" placeholder="Nombre" onChange={handleChange} />
-            <p >{errors.name}</p>
-            <input type="text" name="image" placeholder="Imagen URL" onChange={handleChange} />
-            {pokemonData.image && (
-           <img src={pokemonData.image} alt="Vista previa de la imagen" />)}
-            <p>{errors.image}</p>
-            <input type="number" name="life" placeholder="Vida" onChange={handleChange} />
-            <p>{errors.life}</p>
-            <input type="number" name="attack" placeholder="Ataque" onChange={handleChange} />
-            <p>{errors.attack}</p>
-            <input type="number" name="defense" placeholder="Defensa" onChange={handleChange} />
-            <p>{errors.defense}</p>
-            <input type="number" name="speed" placeholder="Velocidad" onChange={handleChange} />
-            <p>{errors.speed}</p>
-            <input type="number" name="height" placeholder="Altura" onChange={handleChange} />
-            <p>{errors.height}</p>
-            <input type="number" name="weight" placeholder="Peso" onChange={handleChange} />
-            <p>{errors.weight}</p>
-            <select name="types" multiple onChange={handleChange}>
-          
-                {types.map(type => (
-                    <option key={type.id} value={type.name}>
-                        {type.name}
-                    </option>
-                ))}
-            </select>
-            {errors.types && <p>{errors.types}</p>}
-            <button type='submit'>Capturar</button>
-        </form>
-    );
+            <input type="text" name="name" placeholder="Nombre" onChange={handleChange} className={style.formInput} onBlur={() => handleBlur('name')} />
+            <p className={style.errorMessage} >{touchedFields.name && errors.name}</p>
+            <input type="text" name="image" placeholder="Imagen URL" onChange={handleChange} className={style.formInput} onBlur={() => handleBlur('image')} />
+            {dogData.image && (
+           <img src={dogData.image} alt="Vista previa de la imagen" />)}
+            <p className={style.errorMessage} >{touchedFields.image && errors.image}</p>
+            <input type="text" name="lifeSpan" placeholder="Vida(Min-Max)" onChange={handleChange} className={style.formInput} onBlur={() => handleBlur('lifeSpan')} />
+            <p className={style.errorMessage} >{touchedFields.lifeSpan && errors.lifeSpan}</p>
+            <input type="text" name="height" placeholder="Altura(Min-Max)" onChange={handleChange} className={style.formInput} onBlur={() => handleBlur('height')} />
+            <p className={style.errorMessage} >{touchedFields.height && errors.height}</p>
+            <input type="text" name="weight" placeholder="Peso(Min-Max)" onChange={handleChange} className={style.formInput} onBlur={() => handleBlur('weight')} />
+            <p className={style.errorMessage} >{touchedFields.weight && errors.weight}</p>
+            <select name="temperament" multiple onChange={handleChange} className={style.formInput} onBlur={() => handleBlur('temperament')}>
+        {temperaments.map(temp => (
+          <option key={temp.id} value={temp.name}>
+            {temp.name}
+          </option>
+        ))}
+      </select>
+      {errors.temperament && <p>{errors.temperament}</p>}
+
+      <div>
+        {dogData.temperament.map((temp, index) => (
+          <div key={index}>
+            <span>{temp}</span>
+            <button type="button" onClick={() => handleRemoveTemperament(index)}>
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <button type="submit" className={style.submitButton} disabled={submitDisabled}>Crear</button>
+    </form>
+    </div>
+  );
 };
 
 export default Form;

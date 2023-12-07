@@ -42,8 +42,8 @@ const Filter = () => {
         <div className={style.div}>
             <button onClick={() => handlerOrder({target: {value: 'asc'}})}>A - Z</button>
              <button onClick={() => handlerOrder({target: {value: 'desc'}})}>Z - A</button>
-             <button onClick={() => handlerOrder({target: {value: 'asc'}})}>Weight MaxMin</button>
-             <button onClick={() => handlerOrder({target: {value: 'desc'}})}>Weight MinMax</button>
+             <button onClick={() => handlerOrder({target: {value: 'asc'}})}>Weight MinMax</button>
+             <button onClick={() => handlerOrder({target: {value: 'desc'}})}>Weight MaxMin</button>
             <select onChange={handlerfilterOrigin}>
                 <option value= "api">API</option>
                 <option value= "db"> CREADOS</option>

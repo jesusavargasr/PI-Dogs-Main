@@ -18,7 +18,7 @@ const postDog = async (name, image, height, weight, lifeSpan, temperament) => {
   });
 
   if (!created) {
-    return "Dog already exists";
+    return "El perro ya existe";
   }
 
   await Promise.all(temperament.map(async (tempName) => {
